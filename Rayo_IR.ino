@@ -54,7 +54,7 @@ int Relay4 =  A3;
   #define segAlarma 20
   #define segPorton 10
   #define segSalida 100
-  
+
 // variables
 Metro pulso = Metro(100); 
 
@@ -86,7 +86,6 @@ void setup() {
   
   // interruptor
   pinMode(interruptor,INPUT_PULLUP);
-  
 }
 
 void loop() {
@@ -98,18 +97,25 @@ void loop() {
      // decrementar los timers
     reduceVariables();
     
-    // revisar el rayo
-    if (leeSwitch()){
-      // swirch armado, operación normal
-      if (leePuerta()){
-        // puerta cerrada
-      }else{
-        // puerta abierta
-        grabaled(0,255,0); // verde
+    // revisar el rayo, para efectos de alarma
+    if (leeSwitch()){ // swirch armado, operación normal
+      if (leePuerta()){ // puerta cerrada
+        if (timerSalida==0){ // si se acabó el tiempo de salida
+          if (timerAlarma==0){
+            if  (leeRayo()){ // rayo cortado
+              grabaled(255,0,255); // morado
+              actuaAlarma(HIGH);
+            }else{ // rayo no cortado
+               grabaled(255,0,0); // rojo
+            } // fin if leerayo
+          }else{ // timer alarma mayor que cero
+            grabaled(255,0,255); // morado
+          } // fin if timer alarma
+        } // fin if timer salida
+      }else{ // puerta abierta
         timerSalida=segSalida;
       } // fin if leepuerta
-    }else{
-      // switch en modo servicio, rayo no opera
+    }else{ // switch en modo servicio, rayo no opera
       grabaled(0,0,255); // azul
     } // fin if switch 
    } // fin rutina timer

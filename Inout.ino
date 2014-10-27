@@ -41,11 +41,11 @@ void actuaPorton(bool estado){
 void actuaSalida(unsigned int tiempo){
   if (tiempo%2 == 0)
     {
-      grabaled(255,0,0); // rojo
+      grabaled(0,255,0);  // verde
     }
     else
     {
-      grabaled(0,255,0);  // verde
+      grabaled(255,0,0); // rojo
     }  
 }
 
@@ -53,11 +53,11 @@ void grabaled(byte r, byte g, byte b){
   estadoled[0]=r;
   estadoled[1]=g;
   estadoled[2]=b;
-  ledrgb();  
-}
-
-void ledrgb(){
+  
+  // refrescar los LED
   for (int i=0;i<=2;i++){
     analogWrite(led[i],estadoled[i]);
-  }
-} 
+  }  
+}
+
+ 
