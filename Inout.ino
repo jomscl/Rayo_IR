@@ -1,6 +1,6 @@
 bool leeSwitch(){
   bool estado;
-  estado=digitalRead(interruptor);
+  estado=!digitalRead(interruptor);
   return estado;  
 }
 
@@ -12,7 +12,7 @@ bool leeRayo(){
 
 bool leePuerta(){
   bool estado;
-  estado=digitalRead(puerta);
+  estado=!digitalRead(puerta);
   return estado;  
 }
 
@@ -57,7 +57,14 @@ void grabaled(byte r, byte g, byte b){
   // refrescar los LED
   for (int i=0;i<=2;i++){
     analogWrite(led[i],estadoled[i]);
-  }  
+  }
+ 
+  // debug
+  DEBUG("Cambio de luz: ");
+  if (estadoled[0]==255){DEBUG("Rojo ");}
+  if (estadoled[1]==255){DEBUG("Verde ");}
+  if (estadoled[2]==255){DEBUG("Azul ");}
+  DEBUGLN(" ");
 }
 
  

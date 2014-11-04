@@ -5,6 +5,7 @@ int Opto2 = 6;
 int Opto3 = 5;
 int Opto4 = 4;
 
+
 // Las entradas análogas se comportan como salidas digitales A0, A1, A2 y A3
 int Relay1 =  A0;   
 int Relay2 =  A1;
@@ -13,14 +14,21 @@ int Relay4 =  A3;
 */
 
 #include <Metro.h>
+#include <Console.h>
 
 // depuración
 #define HABILITA_DEBUG    // comentar para no debuggear
+#define DEBUG_YUN
 
 // Macros de impresión por serial
 #ifdef HABILITA_DEBUG
-  #define DEBUG(x)  Serial.print (x)
-  #define DEBUGLN(x)  Serial.println (x)
+  #ifdef DEBUG_YUN
+    #define DEBUG(x)  Console.print (x)
+    #define DEBUGLN(x)  Console.println (x)
+  #else
+    #define DEBUG(x)  Serial.print (x)
+    #define DEBUGLN(x)  Serial.println (x)
+  #endif
 #else
   #define DEBUG(x)
   #define DEBUGLN(x)
@@ -65,18 +73,30 @@ unsigned timerSalida=0;
 void setup() {
   // habilitación del debug serial
   #ifdef HABILITA_DEBUG
-    Serial.begin(9600);
+    #ifdef DEBUG_YUN
+       // Initialize Console and wait for port to open:
+      Bridge.begin();
+      Console.begin();
+    
+      // Wait for Console port to connect
+      while (!Console);
+    #else
+      Serial.begin(9600);
+      while (!Serial.available()){Serial.println("a");}
+    #endif
   #endif
+ 
+  DEBUGLN("Encendido");
   
   // leds
   pinMode(ledp,OUTPUT);
   for (int i=0;i<2;i++){pinMode(led[i],OUTPUT);}
   
-  // entradas
-  pinMode(rayo,INPUT);
-  pinMode(puerta,INPUT);
-  pinMode(porton,INPUT);
-  pinMode(receptor,INPUT);
+  // entradas Para debug INPUT_PULLUP
+  pinMode(rayo,INPUT_PULLUP);
+  pinMode(puerta,INPUT_PULLUP);
+  pinMode(porton,INPUT_PULLUP);
+  pinMode(receptor,INPUT_PULLUP);
   
   // salidas
   pinMode(alarma,OUTPUT);
@@ -117,6 +137,7 @@ void loop() {
       } // fin if leepuerta
     }else{ // switch en modo servicio, rayo no opera
       grabaled(0,0,255); // azul
+      timerSalida=0;
     } // fin if switch 
    } // fin rutina timer
   
