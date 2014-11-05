@@ -14,11 +14,11 @@ int Relay4 =  A3;
 */
 
 #include <Metro.h>
-#include <Console.h>
+//#include <Console.h>
 
 // depuración
 #define HABILITA_DEBUG    // comentar para no debuggear
-#define DEBUG_YUN
+//#define DEBUG_YUN
 
 // Macros de impresión por serial
 #ifdef HABILITA_DEBUG
@@ -46,10 +46,10 @@ int Relay4 =  A3;
   byte estadoled[]={0,0,0};
   
   // entradas
-  #define rayo 4  // op4
-  #define puerta 5  // op3
-  #define porton 6  // op2
-  #define receptor 7 // op1
+  #define rayo 7  // op4
+  #define puerta 6  // op3
+  #define porton 5  // op2
+  #define receptor 4 // op1
   
   // salidas
   #define alarma A0 // relay 1
@@ -60,8 +60,8 @@ int Relay4 =  A3;
 
   // constantes
   #define segAlarma 20
-  #define segPorton 10
-  #define segSalida 100
+  #define segPorton 1
+  #define segSalida 200
 
 // variables
 Metro pulso = Metro(100); 
@@ -82,7 +82,7 @@ void setup() {
       while (!Console);
     #else
       Serial.begin(9600);
-      while (!Serial.available()){Serial.println("a");}
+      //while (!Serial.available()){Serial.println("a");}
     #endif
   #endif
  

@@ -6,7 +6,7 @@ bool leeSwitch(){
 
 bool leeRayo(){
   bool estado;
-  estado=digitalRead(rayo);
+  estado=!digitalRead(rayo);
   return estado;  
 }
 
@@ -18,7 +18,7 @@ bool leePuerta(){
 
 bool leePorton(){
   bool estado;
-  estado=digitalRead(porton);
+  estado=!digitalRead(porton);
   return estado;  
 }
 
@@ -34,7 +34,7 @@ void actuaAlarma(bool estado){
 }
 
 void actuaPorton(bool estado){
-  digitalWrite(porton,estado);
+  digitalWrite(swPorton,estado);
   if (estado && timerPorton==0){timerPorton=segPorton;DEBUGLN("Porton Activo");}
 }
 
@@ -60,11 +60,11 @@ void grabaled(byte r, byte g, byte b){
   }
  
   // debug
-  DEBUG("Cambio de luz: ");
-  if (estadoled[0]==255){DEBUG("Rojo ");}
-  if (estadoled[1]==255){DEBUG("Verde ");}
-  if (estadoled[2]==255){DEBUG("Azul ");}
-  DEBUGLN(" ");
+  //DEBUG("Cambio de luz: ");
+  //if (estadoled[0]==255){DEBUG("Rojo ");}
+  //if (estadoled[1]==255){DEBUG("Verde ");}
+  //if (estadoled[2]==255){DEBUG("Azul ");}
+  //DEBUGLN(" ");
 }
 
  
